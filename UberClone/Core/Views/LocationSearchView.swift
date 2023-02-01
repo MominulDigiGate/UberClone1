@@ -18,20 +18,7 @@ struct LocationSearchView: View {
             
             //header view
             HStack{
-                VStack{
-                    Circle()
-                        .frame(width: 8)
-                        .foregroundColor(Color(.systemGray2))
-                    
-                    Rectangle()
-                        .frame(width: 2, height: 35)
-                        .foregroundColor(Color(.systemGray2))
-                    
-                    Rectangle()
-                        .frame(width: 8, height: 8)
-                        .foregroundColor(Color(.black))
-                
-                }
+                ItemLocationStartEnd()
                 
                 VStack{
                     TextField("Current location", text: $originText)
@@ -55,7 +42,7 @@ struct LocationSearchView: View {
             Divider()
                 .padding(.top)
             
-
+            
             //list view
             ScrollView()
             {
@@ -64,8 +51,10 @@ struct LocationSearchView: View {
                         result in
                         ItemLocationSearch(title: result.title, subTitle: result.subtitle)
                             .onTapGesture {
-                                vmLocationSearch.selectLocation(result)
-                                mapState = .locationSelected
+                                withAnimation(.spring()){
+                                    vmLocationSearch.selectLocation(result)
+                                    mapState = .locationSelected
+                                }
                             }
                     }
                 }
