@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ItemMenuIcon: View {
     @Binding var mapState : MapViewState
+    @EnvironmentObject var vmLocationSearch : VmLocationSearch
     
     var body: some View {
         Button{
@@ -37,7 +38,7 @@ struct ItemMenuIcon: View {
             
         case .locationSelected:
             mapState = .noInput
-            
+            vmLocationSearch.selectedLocationCoordinate = nil
         }
     }
     

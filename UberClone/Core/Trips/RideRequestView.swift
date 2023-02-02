@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct RideRequestView: View {
+    
+    @State private var selectedRideType: RideTypeModel = .uberX
+     
     var body: some View {
         VStack {
             Capsule()
@@ -16,7 +19,7 @@ struct RideRequestView: View {
                 .padding(.top, 8)
             
             //Trip info view
-            HStack{
+            HStack {
                 
                 //indicator
                 ItemLocationStartEnd()
@@ -65,14 +68,14 @@ struct RideRequestView: View {
             
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(spacing: 12){
-                    ForEach(0 ..< 7, id:  \.self){ _ in
+                    ForEach(RideTypeModel.allCases){ rideType in
                         VStack(alignment: .leading){
-                            Image("uber-x")
+                            Image(rideType.imageName)
                                 .resizable()
                                 .scaledToFit()
                             
-                            VStack(spacing: 4){
-                                Text("UberX")
+                            VStack(alignment: .leading, spacing: 4){
+                                Text(rideType.description)
                                     .font(.system(size: 14, weight: .semibold))
                                 
                                 Text("$5.04")
@@ -81,8 +84,17 @@ struct RideRequestView: View {
                             .padding(8)
                         }
                         .frame(width: 112, height: 140)
-                        .background(Color(.systemGroupedBackground))
+                        .foregroundColor(Color(rideType == selectedRideType ?
+                            .white: .black))
+                        
+                        .background(Color(rideType == selectedRideType ?
+                            .systemBlue: .systemGroupedBackground))
                         .cornerRadius(10)
+                        .onTapGesture {
+                            withAnimation(.spring()){
+                                selectedRideType = rideType
+                            }
+                        }
                     }
                 }
             }
@@ -132,7 +144,7 @@ struct RideRequestView: View {
         }
         .padding(.bottom, 30)
         .background(.white)
-        .cornerRadius(20)
+        .cornerRadius(30)
     }
 }
 
