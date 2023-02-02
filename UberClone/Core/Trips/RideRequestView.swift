@@ -89,6 +89,8 @@ struct RideRequestView: View {
                         
                         .background(Color(rideType == selectedRideType ?
                             .systemBlue: .systemGroupedBackground))
+                        
+                        .scaleEffect(rideType == selectedRideType ? 1.10: 1.0)
                         .cornerRadius(10)
                         .onTapGesture {
                             withAnimation(.spring()){
